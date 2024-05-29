@@ -5,6 +5,13 @@ This repository is an example implementation of a multi-user system using Larave
 - Multi-user login system with role-based authentication.
 - Role and access management through the command line using `php artisan`.
 
+## Prerequisites
+1. PHP __8.2+__
+2. Laravel __11+__
+3. Composer
+4. MariaDB, MySQL, or PostgreSQL
+
+
 <br><br>
 ## Installation
 1. Clone this repository
