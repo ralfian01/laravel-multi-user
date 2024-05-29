@@ -39,8 +39,8 @@ artisan will show list of privileges:
 +----+--------------------------+-----------------------------+
 | id | code                     | description                 |
 +----+--------------------------+-----------------------------+
-| 1  | ACCOUNT_MANAGE_VIEW      | Lihat daftar akun           |
-| 2  | ACCOUNT_MANAGE_SUSPEND   | Suspend atau aktifkan akun  |
+| 1  | ACCOUNT_MANAGE_VIEW      | Show account list           |
+| 2  | ACCOUNT_MANAGE_SUSPEND   | Suspend or activate account |
 ...
 ```
 
