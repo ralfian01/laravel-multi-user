@@ -36,7 +36,8 @@ This repository is an example implementation of a multi-user system using Larave
 
 <br><br>
 ## Usage
-### Show list of privileges
+## Privileges
+#### Show list of privileges
 To show list of privileges, use the following command:
 ```bash
 php artisan privilege:view
@@ -51,7 +52,7 @@ artisan will show list of privileges:
 ...
 ```
 
-### Adding new privilege
+#### Adding new privilege
 To add a new privilege, use the following command:
 ```bash
 php artisan privilege:insert {code} {description}
@@ -61,7 +62,7 @@ example:
 php artisan privilege:insert "ACCOUNT_SUSPEND" "Suspend account"
 ```
 
-### Update privilege
+#### Update privilege
 To update privilege, use the following command:
 ```bash
 php artisan privilege:update {id_or_code} --code --description
@@ -71,7 +72,7 @@ example:
 php artisan privilege:update ACCOUNT_SUSPEND --code="ACCOUNT_SUSPEND" --description="Suspend account"
 ```
 
-### Delete privilege
+#### Delete privilege
 To delete privilege, use the following command:
 ```bash
 php artisan privilege:delete {id_or_code}
