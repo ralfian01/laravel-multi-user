@@ -21,10 +21,10 @@ class RoleSeed extends Seeder
             ['pr_code' => 'UNKNOWN', 'pr_name' => 'Akun tidak dikenal'],
         ];
 
-        DB::table('pts_role')->insert($roleData);
+        DB::table('role')->insert($roleData);
 
         // Seed role privilege
-        $roleData = [
+        $rolePrivilegeData = [
             ['pr_id' => 1, 'pp_id' => 1],
             ['pr_id' => 1, 'pp_id' => 2],
             ['pr_id' => 1, 'pp_id' => 3],
@@ -32,22 +32,12 @@ class RoleSeed extends Seeder
             ['pr_id' => 1, 'pp_id' => 5],
             ['pr_id' => 1, 'pp_id' => 6],
             ['pr_id' => 1, 'pp_id' => 7],
-            ['pr_id' => 1, 'pp_id' => 8],
-            ['pr_id' => 1, 'pp_id' => 9],
-            ['pr_id' => 1, 'pp_id' => 10],
 
             ['pr_id' => 2, 'pp_id' => 1],
             ['pr_id' => 2, 'pp_id' => 2],
             ['pr_id' => 2, 'pp_id' => 3],
-            ['pr_id' => 2, 'pp_id' => 4],
-            ['pr_id' => 2, 'pp_id' => 5],
-            ['pr_id' => 2, 'pp_id' => 6],
-
-            ['pr_id' => 3, 'pp_id' => 1],
-            ['pr_id' => 3, 'pp_id' => 2],
-            ['pr_id' => 3, 'pp_id' => 3],
         ];
 
-        DB::table('pts_role__privilege')->insert($roleData);
+        DB::table('role__privilege')->insert($rolePrivilegeData);
     }
 }

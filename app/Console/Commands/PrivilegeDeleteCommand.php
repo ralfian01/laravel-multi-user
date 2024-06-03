@@ -5,7 +5,6 @@ namespace App\Console\Commands;
 use App\Models\PrivilegeModel;
 use Exception;
 use Illuminate\Console\Command;
-use Illuminate\Database\QueryException;
 
 class PrivilegeDeleteCommand extends Command
 {
@@ -14,7 +13,8 @@ class PrivilegeDeleteCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'privilege:delete {id_or_code}';
+    protected $signature = 'privilege:delete
+                            {id_or_code}';
 
     /**
      * The console command description.
@@ -28,32 +28,28 @@ class PrivilegeDeleteCommand extends Command
      */
     public function handle()
     {
+        // Get id
         $id = $this->argument('id_or_code');
 
-        $accept = $this->ask("remove privileges? \n data in the roles and accounts tables will be affected \n [y/n] [default: n]") ?? 'n';
-        if ($accept == 'n') {
-            return $this->alert('delete canceled');
+        // Confirmation
+        $accept = $this->confirm("Remove privilege? \n Data in the roles and accounts tables will be affected \n");
+        if (!$accept) {
+            return $this->warn('Deletion canceled');
+        }
+
+        // Find by id or code
+        $privilege = PrivilegeModel::where('pp_id', '=', $id)
+            ->orWhere('pp_code', 'LIKE', "%{$id}%");
+
+        if (!$privilege->exists()) {
+            return $this->error('Data not found');
         }
 
         try {
-            // Find by id or code
-            $find = PrivilegeModel::where('pp_id', '=', $id)
-                ->orWhere('pp_code', 'LIKE', "%{$id}%")
-                ->get();
-
-            $find = $find[0];
-
-            $privilege = PrivilegeModel::find($find['pp_id']);
-            if (!$privilege) {
-                throw new Exception('data not found');
-            }
-
             $privilege->delete();
-            $this->info('Privilege deleted');
-        } catch (QueryException $e) {
-            $this->error($e->getMessage());
+            return $this->info('Privilege deleted');
         } catch (Exception $e) {
-            $this->alert($e->getMessage());
+            return $this->error($e->getMessage());
         }
     }
 }

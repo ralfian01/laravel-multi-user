@@ -16,31 +16,31 @@ class PrivilegeSeed extends Seeder
         $data = [
             [
                 'pp_code' => 'ACCOUNT_MANAGE_VIEW',
-                'pp_description' => 'Lihat daftar akun',
+                'pp_description' => 'View account list',
             ],
             [
                 'pp_code' => 'ACCOUNT_MANAGE_SUSPEND',
-                'pp_description' => 'Suspend atau aktifkan akun',
+                'pp_description' => 'Suspend or activate account',
             ],
             [
                 'pp_code' => 'ACCOUNT_MANAGE_PRIVILEGE',
-                'pp_description' => 'Atur hak akses akun',
+                'pp_description' => 'Set account privileges',
             ],
             [
                 'pp_code' => 'ADMIN_MANAGE_VIEW',
-                'pp_description' => 'Lihat daftar admin',
+                'pp_description' => 'View admin list',
             ],
             [
                 'pp_code' => 'ADMIN_MANAGE_SUSPEND',
-                'pp_description' => 'Suspend atau aktifkan admin',
+                'pp_description' => 'Suspend or activate admin',
             ],
             [
                 'pp_code' => 'ADMIN_MANAGE_PRIVILEGE',
-                'pp_description' => 'Atur hak akses admin',
+                'pp_description' => 'Set admin privileges',
             ],
             [
                 'pp_code' => 'ADMIN_MANAGE_ADD',
-                'pp_description' => 'Tambah/hapus admin',
+                'pp_description' => 'Add or delete admin',
             ],
         ];
 

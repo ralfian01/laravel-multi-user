@@ -13,7 +13,9 @@ class PrivilegeInsertCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'privilege:insert {code} {description}';
+    protected $signature = 'privilege:insert
+                            {code}
+                            {description?}';
 
     /**
      * The console command description.
@@ -27,15 +29,27 @@ class PrivilegeInsertCommand extends Command
      */
     public function handle()
     {
-        $data = [];
-        $data['pp_code'] = $this->argument('code');
-        $data['pp_description'] = $this->argument('description') ?? '';
+        // Collect input
+        $input = [
+            'pp_code' => $this->argument('code'),
+            'pp_description' => $this->argument('description') ?? '',
+        ];
 
+        // Try insert data
         try {
-            PrivilegeModel::insert($data);
-            $this->info('Privilege inserted');
+            PrivilegeModel::insert($input);
+            $this->info('New privilege inserted');
         } catch (Exception $e) {
-            $this->alert($e->getMessage());
+
+            switch ($e->getCode()) {
+                case '23000':
+                    return $this->warn("Privilege [{$input['pp_code']}] already exists");
+                    break;
+
+                default;
+                    return $this->error($e->getMessage());
+                    break;
+            }
         }
     }
 }

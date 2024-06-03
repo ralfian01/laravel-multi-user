@@ -13,7 +13,8 @@ class PrivilegeUpdateCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'privilege:update {id_or_code}
+    protected $signature = 'privilege:update 
+                            {id_or_code}
                             {--code=}
                             {--description=}';
 
@@ -29,34 +30,41 @@ class PrivilegeUpdateCommand extends Command
      */
     public function handle()
     {
+        // Get id
         $id = $this->argument('id_or_code');
 
-        $data = [];
+        // Collect input
+        $input = array_filter(
+            [
+                'pp_code' => $this->option('code') ?? null,
+                'pp_description' => $this->option('description') ?? null,
+            ],
+            // Remove null value
+            fn ($value) => !is_null($value)
+        );
 
-        if ($this->option('code') != null) $data['pp_code'] = $this->option('code');
-        if ($this->option('description') != null) $data['pp_description'] = $this->option('description');
-
-        if (count($data) <= 0) {
-            return $this->alert('no data updated');
+        if (empty($input)) {
+            return $this->warn('No data updated');
         }
 
         // Find by id or code
-        $find = PrivilegeModel::where('pp_id', '=', $id)
-            ->orWhere('pp_code', 'LIKE', "%{$id}%")
-            ->get();
+        $privilege = PrivilegeModel::where('pp_id', '=', $id)
+            ->orWhere('pp_code', 'LIKE', "%{$id}%");
 
-        $find = $find[0];
-
-        $privilege = PrivilegeModel::find($find['pp_id']);
-        if (!$privilege) {
-            return $this->alert('data not found');
+        // If data does not exist
+        if (!$privilege->exists()) {
+            return $this->warn('Data not found');
         }
 
+        // Select first row
+        $privilege = $privilege->first();
+
+        // Try update data
         try {
-            $privilege->update($data);
-            $this->info('Privilege updated');
+            $privilege->update($input);
+            return $this->info('Privilege updated');
         } catch (Exception $e) {
-            $this->alert($e->getMessage());
+            return $this->error($e->getMessage());
         }
     }
 }

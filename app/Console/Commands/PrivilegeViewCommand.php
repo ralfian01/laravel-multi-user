@@ -29,18 +29,19 @@ class PrivilegeViewCommand extends Command
         $data = PrivilegeModel::all();
 
         if ($data->isEmpty()) {
-            $this->info('No data found');
-        } else {
-            $this->table(
-                ['id', 'code', 'description'],
-                $data->map(function ($item) {
-                    return [
-                        $item->pp_id,
-                        $item->pp_code,
-                        $item->pp_description,
-                    ];
-                })->toArray()
-            );
+            return $this->info('No data found');
         }
+
+        // Return in table
+        return $this->table(
+            ['id', 'code', 'description'],
+            $data->map(function ($item) {
+                return [
+                    $item->pp_id,
+                    $item->pp_code,
+                    $item->pp_description,
+                ];
+            })->toArray()
+        );
     }
 }

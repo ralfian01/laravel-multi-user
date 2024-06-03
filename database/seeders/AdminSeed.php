@@ -19,11 +19,11 @@ class AdminSeed extends Seeder
             'pa_username' => env('ROOT_ADMIN_USERNAME'),
             'pa_password' => hash('sha256', env('ROOT_ADMIN_PASSWORD')),
             'pr_id' => 1,
-            'pa_metaDeletable' => false,
-            'pa_metaStatusActive' => true,
-            'pa_metaStatusDelete' => false,
+            'pa_deletable' => false,
+            'pa_statusActive' => true,
+            'pa_statusDelete' => false,
         ];
 
-        DB::table('pts_account')->insert($data);
+        DB::table('account')->insert($data);
     }
 }
