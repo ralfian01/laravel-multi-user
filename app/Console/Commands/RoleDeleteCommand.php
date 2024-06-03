@@ -27,11 +27,13 @@ class RoleDeleteCommand extends Command
      */
     public function handle()
     {
+        // Get id
         $id = $this->argument('id_or_code');
 
-        $accept = $this->ask("remove role? \n data in the accounts tables will be affected \n [y/n] [default: n]") ?? 'n';
-        if ($accept == 'n') {
-            return $this->alert('delete canceled');
+        // Confirmation
+        $accept = $this->confirm("Remove privilege? \n Data in the roles and accounts tables will be affected \n");
+        if (!$accept) {
+            return $this->warn('Deletion canceled');
         }
 
         // Find by id or code
@@ -42,8 +44,7 @@ class RoleDeleteCommand extends Command
             return $this->error('Data not found');
         }
 
-        $role = $role->first();
-
+        // Try delete data
         try {
             $role->delete();
             $this->info('Role deleted');

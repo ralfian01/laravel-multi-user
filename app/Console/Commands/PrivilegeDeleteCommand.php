@@ -45,6 +45,7 @@ class PrivilegeDeleteCommand extends Command
             return $this->error('Data not found');
         }
 
+        // Try delete data
         try {
             $privilege->delete();
             return $this->info('Privilege deleted');
