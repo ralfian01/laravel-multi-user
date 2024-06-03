@@ -88,6 +88,7 @@ example:
 php artisan privilege:delete
 ```
 
+<br>
 ### Roles
 #### Show list of roles
 To show list of roles, use the following command:
