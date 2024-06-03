@@ -29,6 +29,12 @@ This repository is an example implementation of a multi-user system using Larave
    ```bash
    php artisan migrate
    ```
+7. Run the seeder sequentially to insert the necessary rows
+   ```bash
+   php artisan db:seed --class=PrivilegeSeed
+   php artisan db:seed --class=RoleSeed
+   php artisan db:seed --class=AdminSeed
+   ```
 7. Start the development server
    ```bash
    php artisan serve
@@ -36,7 +42,7 @@ This repository is an example implementation of a multi-user system using Larave
 
 <br><br>
 ## Usage
-## Privileges
+### Privileges
 #### Show list of privileges
 To show list of privileges, use the following command:
 ```bash
@@ -80,4 +86,53 @@ php artisan privilege:delete {id_or_code}
 example:
 ```bash
 php artisan privilege:delete
+```
+
+### Roles
+#### Show list of roles
+To show list of roles, use the following command:
+```bash
+php artisan role:view
+```
+artisan will show list of role:
+```
++----+--------------+--------------------+---------------------------+
+| id | code         | name               | privileges                |
++----+--------------+--------------------+---------------------------+
+| 1  | MASTER_ADMIN | Master Admin       | ACCOUNT_MANAGE_VIEW,      |
+|    |              |                    | ADMIN_MANAGE_ADD,         |
+|    |              |                    | ADMIN_MANAGE_PRIVILEGE,   |
+|    |              |                    | ADMIN_MANAGE_SUSPEND,     |
+|    |              |                    | ADMIN_MANAGE_VIEW,        |
+...
+```
+
+#### Adding new role
+To add a new role, use the following command:
+```bash
+php artisan role:insert {code} {name} --privileges
+```
+example:
+```bash
+php artisan role:insert "MEMBER" "Role Member" --privileges="ACCOUNT_MANAGE_VIEW,ACCOUNT_MANAGE_SUSPEND"
+```
+
+#### Update role
+To update role, use the following command:
+```bash
+php artisan role:update {id_or_code} --code --name --add-privileges --delete-privileges
+```
+example:
+```bash
+php artisan role:update ACCOUNT_SUSPEND --code="ACCOUNT_SUSPEND" --name="Suspend account" --add-privileges="ACCOUNT_MANAGE_PRIVILEGE"
+```
+
+#### Delete role
+To delete role, use the following command:
+```bash
+php artisan role:delete {id_or_code}
+```
+example:
+```bash
+php artisan role:delete
 ```
