@@ -138,3 +138,78 @@ example:
 ```bash
 php artisan role:delete
 ```
+
+## Multi-user Usage
+Test multi user systems with API
+### Before we start
+1. Make sure you have installed Postman on your computer
+2. Import collection file named "Laravel-Multi-User.postman_collection.json" to your Postman Collection
+3. Open "Laravel-Multi-User" collection and then go to "Variables" tab
+4. Fill in the "Current Value" column with the hostname of your currently running Laravel development server.<br> Example: `http://localhost:8000/api`
+5. Run Laravel development server
+
+### Test Multi-user as Root Admin
+1. Open postman request named "Login as Root Admin" in "Laravel-Multi-User" collection
+2. Click "Send" button to request auth token to our Laravel API server
+3. If authorization is successful, the API server will respond with:
+```json
+{
+   "code": 200,
+   "status": "SUCCESS",
+   "message": "Success",
+   "data": {
+      "token": {jwt token}
+   }
+}
+```
+4. The variable "BEARER_TOKEN" will be filled in automatically
+5. Test **/endpoint1** and **/endpoint2** by open postman request named "Test Endpoint 1" and "Test Endpoint 2"
+6. The API server will respond with the json below for requests **/endpoint1** and **/endpoint2**: 
+```json
+{
+   "code": 200,
+   "status": "SUCCESS",
+   "message": "Success",
+   "data": null
+}
+```
+
+### Test Multi-user as User
+1. Open postman request named "Login as User" in "Laravel-Multi-User" collection
+2. Click "Send" button to request auth token to our Laravel API server
+3. If authorization is successful, the API server will respond with:
+```json
+{
+   "code": 200,
+   "status": "SUCCESS",
+   "message": "Success",
+   "data": {
+      "token": {jwt token}
+   }
+}
+```
+4. The variable "BEARER_TOKEN" will be filled in automatically
+5. Test **/endpoint1** and **/endpoint2** by open postman request named "Test Endpoint 1" and "Test Endpoint 2"
+6. For **/endpoint1** requests, the API server will respond with the json below:
+```json
+{
+   "code": 200,
+   "status": "SUCCESS",
+   "message": "Success",
+   "data": null
+}
+```
+7. For **/endpoint2** requests, the API server will respond with the json below:
+```json
+{
+   "code": 401,
+   "status": "UNAUTHORIZED",
+   "message": "You do not have permission to access this resource",
+   "error_detail": []
+}
+```
+
+### Why did that happen?
+That's because in the class that handles requests to **/endpoint2** there is a _**$privilegeRules**_ property filled with "ADMIN_MANAGE_VIEW" which the User account doesn't have, while the Root Admin account does. So Users cannot access the endpoint, but Root Admin can access it.
+<br><br>
+For further details, you can learn by looking at the contents of the routes and classes in **/routes/api.php**
