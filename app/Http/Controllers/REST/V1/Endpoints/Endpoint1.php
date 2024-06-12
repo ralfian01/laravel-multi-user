@@ -1,20 +1,23 @@
 <?php
 
-namespace App\Http\Controllers\REST\V1\Auth;
+namespace App\Http\Controllers\REST\V1\Endpoints;
 
 use App\Http\Controllers\REST\BaseREST;
-use Firebase\JWT\JWT;
 
-class Account extends BaseREST
+class Endpoint1 extends BaseREST
 {
     public function __construct(
         ?array $payload = [],
         ?array $file = [],
-        ?array $auth = []
+        ?array $auth = [],
+        // ?DBRepo $dbRepo = null
     ) {
+
         $this->payload = $payload;
         $this->file = $file;
         $this->auth = $auth;
+        // $this->dbRepo = $dbRepo ?? new DBRepo();
+        return $this;
     }
 
     /**
@@ -52,20 +55,6 @@ class Account extends BaseREST
      */
     public function get()
     {
-        $reqTime = time();
-        $expTime = $reqTime + (3600 * 24); // 1 Hour * 24: Expires in 24 hours
-        $jwtObject = [
-            'iss' => 'JWT Authentication',
-            'iat' => $reqTime,
-            'exp' => $expTime,
-            'uid_b64' => base64_encode($this->auth['uuid']),
-            'username' => $this->auth['username']
-        ];
-
-        $response = [
-            'token' => JWT::encode($jwtObject, env('APP_KEY'), 'HS256'),
-        ];
-
-        return $this->respond(200, $response);
+        return $this->respond(200);
     }
 }

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\REST\V1;
+namespace App\Http\Controllers\REST\V1\Endpoints;
 
 use App\Http\Controllers\REST\BaseREST;
 
-class RESTV1 extends BaseREST
+class Endpoint2 extends BaseREST
 {
     public function __construct(
         ?array $payload = [],
@@ -23,15 +23,14 @@ class RESTV1 extends BaseREST
     /**
      * @var array Property that contains the payload rules
      */
-    protected $payloadRules = [
-        // 'payload1' => 'required',
-        // 'payload_file' => 'required|file',
-    ];
+    protected $payloadRules = [];
 
     /**
      * @var array Property that contains the privilege data
      */
-    protected $privilegeRules = [];
+    protected $privilegeRules = [
+        'ADMIN_MANAGE_VIEW'
+    ];
 
 
     /**
@@ -58,6 +57,6 @@ class RESTV1 extends BaseREST
      */
     public function get()
     {
-        return $this->respond(200, $this->auth);
+        return $this->respond(200);
     }
 }

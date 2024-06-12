@@ -15,10 +15,9 @@ class RoleSeed extends Seeder
     {
         // Seed role
         $roleData = [
-            ['pr_code' => 'MASTER_ADMIN', 'pr_name' => 'Master Admin'],
+            ['pr_code' => 'ROOT_ADMIN', 'pr_name' => 'Root Admin'],
             ['pr_code' => 'ADMIN', 'pr_name' => 'Admin'],
-            ['pr_code' => 'MEMBER', 'pr_name' => 'Anggota'],
-            ['pr_code' => 'UNKNOWN', 'pr_name' => 'Akun tidak dikenal'],
+            ['pr_code' => 'MEMBER', 'pr_name' => 'Member']
         ];
 
         DB::table('role')->insert($roleData);

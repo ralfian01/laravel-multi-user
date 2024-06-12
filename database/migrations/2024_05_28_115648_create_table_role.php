@@ -34,51 +34,6 @@ return new class extends Migration
                 ->onUpdate('no action');
             $table->unique(['pr_id', 'pp_id']);
         });
-
-        // Create role table view
-        $prefix = DB::getTablePrefix();
-        $driver = DB::getDriverName();
-
-        switch ($driver) {
-            case 'pgsql':
-                // 
-                break;
-
-            case 'mysql':
-            case 'mariadb':
-                DB::statement("DROP VIEW IF EXISTS {$prefix}role__vw");
-                DB::statement("
-                    CREATE VIEW {$prefix}role__vw AS
-                    SELECT
-                        {$prefix}role.pr_id AS prv_id,
-                        {$prefix}role.pr_code AS prv_code,
-                        {$prefix}role.pr_name AS prv_name,
-                        IFNULL(prpv.privilege, '[]') AS prv_privilege
-                    FROM (
-                        {$prefix}role
-                        LEFT JOIN (
-                            SELECT
-                                prp.pr_id AS pr_id,
-                                CONCAT('[',
-                                    GROUP_CONCAT('\"', pp.pp_code, '\"'),
-                                ']') AS privilege
-                            FROM {$prefix}role__privilege prp
-                            LEFT JOIN {$prefix}privilege pp
-                            ON pp.pp_id = prp.pp_id
-                            GROUP BY prp.pr_id
-                        ) prpv
-                        ON prpv.pr_id = {$prefix}role.pr_id
-                    )
-                    ORDER BY {$prefix}role.pr_id
-                ");
-                break;
-
-            case 'sqlite':
-                // 
-                break;
-            default:
-                throw new Exception("Unsupported database driver");
-        }
     }
 
     /**
