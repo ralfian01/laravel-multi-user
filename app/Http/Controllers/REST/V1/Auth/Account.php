@@ -1,32 +1,26 @@
 <?php
 
-namespace App\Http\Controllers\REST\V1;
+namespace App\Http\Controllers\REST\V1\Auth;
 
 use App\Http\Controllers\REST\BaseREST;
+use Firebase\JWT\JWT;
 
-class RESTV1 extends BaseREST
+class Account extends BaseREST
 {
     public function __construct(
         ?array $payload = [],
         ?array $file = [],
-        ?array $auth = [],
-        // ?DBRepo $dbRepo = null
+        ?array $auth = []
     ) {
-
         $this->payload = $payload;
         $this->file = $file;
         $this->auth = $auth;
-        // $this->dbRepo = $dbRepo ?? new DBRepo();
-        return $this;
     }
 
     /**
      * @var array Property that contains the payload rules
      */
-    protected $payloadRules = [
-        // 'payload1' => 'required',
-        // 'payload_file' => 'required|file',
-    ];
+    protected $payloadRules = [];
 
     /**
      * @var array Property that contains the privilege data
@@ -58,6 +52,20 @@ class RESTV1 extends BaseREST
      */
     public function get()
     {
-        return $this->respond(200, $this->auth);
+        $reqTime = time();
+        $expTime = $reqTime + (3600 * 24); // 1 Hour * 24: Expires in 24 hours
+        $jwtObject = [
+            'iss' => 'Putsutech JWT Authentication',
+            'iat' => $reqTime,
+            'exp' => $expTime,
+            'uid_b64' => base64_encode($this->auth['uuid']),
+            'username' => $this->auth['username']
+        ];
+
+        $response = [
+            'token' => JWT::encode($jwtObject, env('APP_KEY'), 'HS256'),
+        ];
+
+        return $this->respond(200, $response);
     }
 }

@@ -87,12 +87,11 @@ class BaseREST extends Controller
      */
     private $directCall = true;
 
-
     /**
      * Default function if client unauthorized
      * @return void|string
      */
-    private function __unauthorizedScheme()
+    private function unauthorizedScheme()
     {
         return $this->error(401);
     }
@@ -133,27 +132,29 @@ class BaseREST extends Controller
         // Merge payload with file type payload
         self::mergePayload($this->payload, $this->file, $this->payload);
 
-        // // Collect authentication data
-        // $this->auth = $this->request->auth->data ?? [];
+        // Check authentication status
+        if ($request->attributes->has('auth_status')) {
+            if (!$request->attributes->get('auth_status')) {
+                return $this->unauthorizedScheme();
+            }
 
-        // if (isset($this->auth['privilege'])) {
+            // Collect authentication data
+            $this->auth = $request->attributes->get('auth_data');
 
-        //     // // Check account privilege
-        //     if (!$this->checkPrivilege($this->auth['privilege']))
-        //         return $this->__unauthorizedScheme();
-        // }
+            if (isset($this->auth['privileges'])) {
+
+                // Check account privilege
+                if (!$this->validatePrivilege($this->auth['privileges'])) {
+                    return $this->unauthorizedScheme();
+                }
+            }
+        }
 
         if (!method_exists(self::class, 'mainActivity')) {
             throw new Exception("Method mainActivity() does not exist");
         }
 
         return $this->validatePayload($params);
-
-        // // Authorize client
-        // return $this->authHandler(
-        //     fn () => $this->validatePayload($params),
-        //     fn () => $this->__unauthorizedScheme()
-        // );
     }
 
 
@@ -176,7 +177,7 @@ class BaseREST extends Controller
      * Function to check account authorization
      * @return boolean
      */
-    private function checkPrivilege($authority)
+    private function validatePrivilege($authority)
     {
         $validCount = 0;
         foreach ($this->privilegeRules as $key => $value) {

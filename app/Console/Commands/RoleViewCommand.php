@@ -2,8 +2,10 @@
 
 namespace App\Console\Commands;
 
+use App\Models\RoleModel;
 use App\Models\RoleViewModel;
 use Illuminate\Console\Command;
+use stdClass;
 
 class RoleViewCommand extends Command
 {
@@ -26,7 +28,9 @@ class RoleViewCommand extends Command
      */
     public function handle()
     {
-        $data = RoleViewModel::all();
+        $data =
+            RoleModel::select(['pr_id', 'pr_code', 'pr_name'])
+            ->getWithPrivileges();
 
         if ($data->isEmpty()) {
             $this->info('No data found');
@@ -34,19 +38,19 @@ class RoleViewCommand extends Command
             $this->table(
                 ['id', 'code', 'name', 'privileges'],
                 $data->map(function ($item) {
-                    $item->prv_privilege = str_replace(['"', '[', ']'], '', $item->prv_privilege);
-                    $item->prv_privilege = str_replace([','], ', ', $item->prv_privilege);
+                    $item->privileges = str_replace(['"', '[', ']'], '', json_encode($item->privileges));
+                    $item->privileges = str_replace([','], ', ', $item->privileges);
+
                     return [
-                        $item->prv_id,
-                        $item->prv_code,
-                        $item->prv_name,
-                        $this->wordWrap($item->prv_privilege, 25)
+                        $item->pr_id,
+                        $item->pr_code,
+                        $item->pr_name,
+                        $this->wordWrap($item->privileges, 25)
                     ];
                 })
             );
         }
     }
-
 
     private function wordWrap($string, $width = 50)
     {

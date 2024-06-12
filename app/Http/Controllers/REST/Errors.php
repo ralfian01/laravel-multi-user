@@ -30,7 +30,7 @@ class Errors
         ],
         401 => [
             'status' => 'UNAUTHORIZED',
-            'message' => 'You do not have authorization to access this resource'
+            'message' => 'You do not have permission to access this resource'
         ],
         403 => [
             'status' => 'FORBIDDEN',
