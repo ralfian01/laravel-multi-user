@@ -144,7 +144,7 @@ php artisan role:delete
 Test multi user systems with API
 ### Before we start
 1. Make sure you have installed Postman on your computer
-2. Import collection file named "Laravel-Multi-User.postman_collection.json" to your Postman Collection
+2. Import collection file in **Postman/Laravel-Multi-User.postman_collection.json** to your Postman Collection
 3. Open "Laravel-Multi-User" collection and then go to "Variables" tab
 4. Fill in the "Current Value" column with the hostname of your currently running Laravel development server.<br> Example: `http://localhost:8000/api`
 5. Run Laravel development server
