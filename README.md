@@ -33,7 +33,8 @@ This repository is an example implementation of a multi-user system using Larave
    ```bash
    php artisan db:seed --class=PrivilegeSeed
    php artisan db:seed --class=RoleSeed
-   php artisan db:seed --class=AdminSeed
+   php artisan db:seed --class=RootAdminSeed
+   php artisan db:seed --class=UserSeed
    ```
 7. Start the development server
    ```bash
