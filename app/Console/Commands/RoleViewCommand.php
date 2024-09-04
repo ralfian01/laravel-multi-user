@@ -45,7 +45,8 @@ class RoleViewCommand extends Command
                         $item->pr_id,
                         $item->pr_code,
                         $item->pr_name,
-                        $this->wordWrap($item->privileges, 25)
+                        str_replace(',', ",\n", str_replace(' ', '', $item->privileges)),
+                        // $this->wordWrap($item->privileges, 25)
                     ];
                 })
             );
