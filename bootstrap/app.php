@@ -18,5 +18,20 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        //
+        $exceptions->render(function (Throwable $exception, Request $request) {
+            if (
+                $exception instanceof MethodNotAllowedException
+                || $exception instanceof MethodNotAllowedHttpException
+                || $exception instanceof NotFoundHttpException
+                || $exception instanceof NotFoundResourceException
+            ) {
+                // Custom 404 for api
+                if ($request->is(['api', 'api/*'])) {
+                    return (new Errors)
+                        ->setInternal(false)
+                        ->setMessage(404, "Endpoint or HTTP method not available")
+                        ->sendError();
+                }
+            }
+        });
     })->create();
