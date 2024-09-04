@@ -12,11 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('privilege', function (Blueprint $table) {
-            $table->integer('pp_id')->autoIncrement();
-            $table->string('pp_code', 30)->nullable(false)->unique();
-            $table->string('pp_description', 100);
-            $table->dateTime('pp_createdAt')->useCurrent();
-            $table->dateTime('pp_updatedAt')->useCurrentOnUpdate()->nullable()->default(null);
+            $table->integer('tp_id')->autoIncrement();
+            $table->string('tp_code', 30)->nullable(false)->unique();
+            $table->string('tp_description', 100);
+            $table->dateTime('tp_createdAt')->useCurrent();
+            $table->dateTime('tp_updatedAt')->useCurrentOnUpdate()->nullable()->default(null);
         });
     }
 

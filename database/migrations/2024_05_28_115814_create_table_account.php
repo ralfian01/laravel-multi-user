@@ -13,50 +13,50 @@ return new class extends Migration
     {
         // Create account table
         Schema::create('account', function (Blueprint $table) {
-            $table->integer('pa_id')->autoIncrement();
-            $table->string('pa_uuid', 50)->nullable(false);
-            $table->string('pa_username', 100)->nullable(false);
-            $table->string('pa_password', 100)->nullable(true);
-            $table->integer('pr_id')->nullable(false);
-            $table->foreign('pr_id')->references('pr_id')->on('role')
+            $table->integer('ta_id')->autoIncrement();
+            $table->string('ta_uuid', 50)->nullable(false);
+            $table->string('ta_username', 100)->nullable(false);
+            $table->string('ta_password', 100)->nullable(true);
+            $table->integer('tr_id')->nullable(false);
+            $table->foreign('tr_id')->references('tr_id')->on('role')
                 ->onDelete('no action')
                 ->onUpdate('no action');
 
-            $table->boolean('pa_deletable')->default(true)->nullable(false);
-            $table->boolean('pa_statusActive')->default(false)->nullable(false);
-            $table->boolean('pa_statusDelete')->default(false)->nullable(false);
+            $table->boolean('ta_deletable')->default(true)->nullable(false);
+            $table->boolean('ta_statusActive')->default(false)->nullable(false);
+            $table->boolean('ta_statusDelete')->default(false)->nullable(false);
 
-            $table->dateTime('pa_createdAt')->useCurrent();
-            $table->dateTime('pa_updatedAt')->useCurrentOnUpdate()->nullable()->default(null);
+            $table->dateTime('ta_createdAt')->useCurrent();
+            $table->dateTime('ta_updatedAt')->useCurrentOnUpdate()->nullable()->default(null);
         });
 
         // Create account privilege table
         Schema::create('account__privilege', function (Blueprint $table) {
-            $table->integer('pap_id')->autoIncrement();
-            $table->integer('pa_id')->nullable(false);
-            $table->foreign('pa_id')->references('pa_id')->on('account')
+            $table->integer('tap_id')->autoIncrement();
+            $table->integer('ta_id')->nullable(false);
+            $table->foreign('ta_id')->references('ta_id')->on('account')
                 ->onDelete('cascade')
                 ->onUpdate('no action');
 
-            $table->integer('pp_id')->nullable(false);
-            $table->foreign('pp_id')->references('pp_id')->on('privilege')
+            $table->integer('tp_id')->nullable(false);
+            $table->foreign('tp_id')->references('tp_id')->on('privilege')
                 ->onDelete('cascade')
                 ->onUpdate('no action');
         });
 
         // Create account metadata table
         Schema::create('account__meta', function (Blueprint $table) {
-            $table->integer('pam_id')->autoIncrement();
-            $table->string('pam_code', 30)->nullable(false);
-            $table->string('pam_value', 100)->nullable(true)->default(null);
+            $table->integer('tam_id')->autoIncrement();
+            $table->string('tam_code', 30)->nullable(false);
+            $table->string('tam_value', 100)->nullable(true)->default(null);
 
-            $table->integer('pa_id')->nullable(false);
-            $table->foreign('pa_id')->references('pa_id')->on('account')
+            $table->integer('ta_id')->nullable(false);
+            $table->foreign('ta_id')->references('ta_id')->on('account')
                 ->onDelete('cascade')
                 ->onUpdate('no action');
 
-            $table->dateTime('pa_createdAt')->useCurrent();
-            $table->dateTime('pa_expiredAt')->nullable(true);
+            $table->dateTime('ta_createdAt')->useCurrent();
+            $table->dateTime('ta_expiredAt')->nullable(true);
         });
 
         // Create account table view

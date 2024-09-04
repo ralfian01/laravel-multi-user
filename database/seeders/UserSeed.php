@@ -15,13 +15,13 @@ class UserSeed extends Seeder
     public function run(): void
     {
         $data = [
-            'pa_uuid' => Uuid::uuid4()->toString(),
-            'pa_username' => 'user_1@app.com',
-            'pa_password' => hash('sha256', '123456'),
-            'pr_id' => 2,
-            'pa_deletable' => true,
-            'pa_statusActive' => true,
-            'pa_statusDelete' => false,
+            'ta_uuid' => Uuid::uuid4()->toString(),
+            'ta_username' => 'user_1@app.com',
+            'ta_password' => hash('sha256', '123456'),
+            'tr_id' => 2,
+            'ta_deletable' => true,
+            'ta_statusActive' => true,
+            'ta_statusDelete' => false,
         ];
 
         DB::table('account')->insert($data);

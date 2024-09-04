@@ -15,13 +15,13 @@ class RootAdminSeed extends Seeder
     public function run(): void
     {
         $data = [
-            'pa_uuid' => Uuid::uuid4()->toString(),
-            'pa_username' => env('ROOT_ADMIN_USERNAME'),
-            'pa_password' => hash('sha256', env('ROOT_ADMIN_PASSWORD')),
-            'pr_id' => 1,
-            'pa_deletable' => false,
-            'pa_statusActive' => true,
-            'pa_statusDelete' => false,
+            'ta_uuid' => Uuid::uuid4()->toString(),
+            'ta_username' => env('ROOT_ADMIN_USERNAME'),
+            'ta_password' => hash('sha256', env('ROOT_ADMIN_PASSWORD')),
+            'tr_id' => 1,
+            'ta_deletable' => false,
+            'ta_statusActive' => true,
+            'ta_statusDelete' => false,
         ];
 
         DB::table('account')->insert($data);

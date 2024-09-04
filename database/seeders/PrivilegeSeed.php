@@ -15,32 +15,32 @@ class PrivilegeSeed extends Seeder
     {
         $data = [
             [
-                'pp_code' => 'ACCOUNT_MANAGE_VIEW',
-                'pp_description' => 'View account list',
+                'tp_code' => 'ACCOUNT_MANAGE_VIEW',
+                'tp_description' => 'View account list',
             ],
             [
-                'pp_code' => 'ACCOUNT_MANAGE_SUSPEND',
-                'pp_description' => 'Suspend or activate account',
+                'tp_code' => 'ACCOUNT_MANAGE_SUSPEND',
+                'tp_description' => 'Suspend or activate account',
             ],
             [
-                'pp_code' => 'ACCOUNT_MANAGE_PRIVILEGE',
-                'pp_description' => 'Set account privileges',
+                'tp_code' => 'ACCOUNT_MANAGE_PRIVILEGE',
+                'tp_description' => 'Set account privileges',
             ],
             [
-                'pp_code' => 'ADMIN_MANAGE_VIEW',
-                'pp_description' => 'View admin list',
+                'tp_code' => 'ADMIN_MANAGE_VIEW',
+                'tp_description' => 'View admin list',
             ],
             [
-                'pp_code' => 'ADMIN_MANAGE_SUSPEND',
-                'pp_description' => 'Suspend or activate admin',
+                'tp_code' => 'ADMIN_MANAGE_SUSPEND',
+                'tp_description' => 'Suspend or activate admin',
             ],
             [
-                'pp_code' => 'ADMIN_MANAGE_PRIVILEGE',
-                'pp_description' => 'Set admin privileges',
+                'tp_code' => 'ADMIN_MANAGE_PRIVILEGE',
+                'tp_description' => 'Set admin privileges',
             ],
             [
-                'pp_code' => 'ADMIN_MANAGE_ADD',
-                'pp_description' => 'Add or delete admin',
+                'tp_code' => 'ADMIN_MANAGE_ADD',
+                'tp_description' => 'Add or delete admin',
             ],
         ];
 

@@ -15,26 +15,26 @@ class RoleSeed extends Seeder
     {
         // Seed role
         $roleData = [
-            ['pr_code' => 'ROOT_ADMIN', 'pr_name' => 'Root Admin'],
-            ['pr_code' => 'ADMIN', 'pr_name' => 'Admin'],
-            ['pr_code' => 'MEMBER', 'pr_name' => 'Member']
+            ['tr_code' => 'ROOT_ADMIN', 'tr_name' => 'Root Admin'],
+            ['tr_code' => 'ADMIN', 'tr_name' => 'Admin'],
+            ['tr_code' => 'MEMBER', 'tr_name' => 'Member']
         ];
 
         DB::table('role')->insert($roleData);
 
         // Seed role privilege
         $rolePrivilegeData = [
-            ['pr_id' => 1, 'pp_id' => 1],
-            ['pr_id' => 1, 'pp_id' => 2],
-            ['pr_id' => 1, 'pp_id' => 3],
-            ['pr_id' => 1, 'pp_id' => 4],
-            ['pr_id' => 1, 'pp_id' => 5],
-            ['pr_id' => 1, 'pp_id' => 6],
-            ['pr_id' => 1, 'pp_id' => 7],
+            ['tr_id' => 1, 'tp_id' => 1],
+            ['tr_id' => 1, 'tp_id' => 2],
+            ['tr_id' => 1, 'tp_id' => 3],
+            ['tr_id' => 1, 'tp_id' => 4],
+            ['tr_id' => 1, 'tp_id' => 5],
+            ['tr_id' => 1, 'tp_id' => 6],
+            ['tr_id' => 1, 'tp_id' => 7],
 
-            ['pr_id' => 2, 'pp_id' => 1],
-            ['pr_id' => 2, 'pp_id' => 2],
-            ['pr_id' => 2, 'pp_id' => 3],
+            ['tr_id' => 2, 'tp_id' => 1],
+            ['tr_id' => 2, 'tp_id' => 2],
+            ['tr_id' => 2, 'tp_id' => 3],
         ];
 
         DB::table('role__privilege')->insert($rolePrivilegeData);

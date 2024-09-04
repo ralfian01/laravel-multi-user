@@ -3,9 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\RoleModel;
-use App\Models\RoleViewModel;
 use Illuminate\Console\Command;
-use stdClass;
 
 class RoleViewCommand extends Command
 {
