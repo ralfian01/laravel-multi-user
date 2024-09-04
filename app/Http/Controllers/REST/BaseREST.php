@@ -119,12 +119,9 @@ class BaseREST extends Controller
         // Collect payload in non file form and then combine it
         self::mergePayload($this->payload, $this->getPayload(), $this->payload);
 
-        // Additional payload from placeholder
-        $params = func_get_args();
-
-        if (is_array(end($params))) {
-            self::mergePayload($this->payload, end($params), $this->payload);
-        }
+        // Additional payload from route
+        $params = $this->request->route()->parameters();
+        self::mergePayload($this->payload, $params, $this->payload);
 
         // Collect payload in file form
         $this->file = $this->getFile();
