@@ -44,7 +44,7 @@ class RoleUpdateCommand extends Command
                 'pr_name' => $this->option('name') ?? null,
             ],
             // Remove null value
-            fn ($value) => !is_null($value)
+            fn($value) => !is_null($value)
         );
 
         if (empty($input) && empty($this->options())) {
@@ -52,8 +52,11 @@ class RoleUpdateCommand extends Command
         }
 
         // Find by id or code
-        $role = RoleModel::where('pr_id', '=', $id)
-            ->orWhere('pr_code', 'LIKE', "%{$id}%");
+        if (is_numeric($id)) {
+            $role = RoleModel::where('pr_id', $id);
+        } else {
+            $role = RoleModel::where('pr_code', 'LIKE', "%{$id}%");
+        }
 
         // If data does not exist
         if (!$role->exists()) {
@@ -197,8 +200,18 @@ class RoleUpdateCommand extends Command
     private function checkPrivilege(array $arrPriv = [])
     {
         // Check privilege availability
-        $privilege = PrivilegeModel::whereIn('pp_id', $arrPriv)
-            ->orWhereIn('pp_code', $arrPriv)
+        $numPriv = [];
+        $codePriv = [];
+        foreach ($arrPriv as $priv) {
+            if (is_numeric($priv)) {
+                $numPriv[] = $priv;
+            } else {
+                $codePriv[] = $priv;
+            }
+        }
+
+        $privilege = PrivilegeModel::whereIn('pp_id', $numPriv)
+            ->orWhereIn('pp_code', $codePriv)
             ->get(['pp_id', 'pp_code'])
             ->toArray();
 

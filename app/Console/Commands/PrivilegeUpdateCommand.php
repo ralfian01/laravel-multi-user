@@ -40,7 +40,7 @@ class PrivilegeUpdateCommand extends Command
                 'pp_description' => $this->option('description') ?? null,
             ],
             // Remove null value
-            fn ($value) => !is_null($value)
+            fn($value) => !is_null($value)
         );
 
         if (empty($input)) {
@@ -48,8 +48,11 @@ class PrivilegeUpdateCommand extends Command
         }
 
         // Find by id or code
-        $privilege = PrivilegeModel::where('pp_id', '=', $id)
-            ->orWhere('pp_code', 'LIKE', "%{$id}%");
+        if (is_numeric($id)) {
+            $privilege = PrivilegeModel::where('pp_id', $id);
+        } else {
+            $privilege = PrivilegeModel::where('pp_code', 'LIKE', "%{$id}%");
+        }
 
         // If data does not exist
         if (!$privilege->exists()) {

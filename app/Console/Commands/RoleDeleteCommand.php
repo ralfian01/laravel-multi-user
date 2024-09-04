@@ -37,8 +37,11 @@ class RoleDeleteCommand extends Command
         }
 
         // Find by id or code
-        $role = RoleModel::where('pr_id', '=', $id)
-            ->orWhere('pr_code', 'LIKE', "%{$id}%");
+        if (is_numeric($id)) {
+            $role = RoleModel::where('pr_id', $id);
+        } else {
+            $role = RoleModel::where('pr_code', 'LIKE', "%{$id}%");
+        }
 
         if (!$role->exists()) {
             return $this->error('Data not found');

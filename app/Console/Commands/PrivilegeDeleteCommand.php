@@ -38,8 +38,12 @@ class PrivilegeDeleteCommand extends Command
         }
 
         // Find by id or code
-        $privilege = PrivilegeModel::where('pp_id', '=', $id)
-            ->orWhere('pp_code', 'LIKE', "%{$id}%");
+        if (is_numeric($id)) {
+            $privilege = PrivilegeModel::where('pp_id', $id);
+        } else {
+            $privilege = PrivilegeModel::where('pp_code', 'LIKE', "%{$id}%");
+        }
+
 
         if (!$privilege->exists()) {
             return $this->error('Data not found');

@@ -116,8 +116,18 @@ class RoleInsertCommand extends Command
     private function checkPrivilege(array $arrPriv = [])
     {
         // Check privilege availability
-        $privilege = PrivilegeModel::whereIn('pp_id', $arrPriv)
-            ->orWhereIn('pp_code', $arrPriv)
+        $numPriv = [];
+        $codePriv = [];
+        foreach ($arrPriv as $priv) {
+            if (is_numeric($priv)) {
+                $numPriv[] = $priv;
+            } else {
+                $codePriv[] = $priv;
+            }
+        }
+
+        $privilege = PrivilegeModel::whereIn('pp_id', $numPriv)
+            ->orWhereIn('pp_code', $codePriv)
             ->get(['pp_id', 'pp_code'])
             ->toArray();
 
