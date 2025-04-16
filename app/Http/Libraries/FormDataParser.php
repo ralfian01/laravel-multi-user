@@ -90,9 +90,11 @@ class FormDataParser
                     file_put_contents($tempPath, $body);
 
                     // Check payload name is array or not
-                    if (substr($name, -2) == '[]') {
+                    if (str_contains($name, '[') && substr($name, -1) == ']') {
 
-                        $name = substr($name, 0, -2);
+                        $name = substr($name, 0, -1);
+                        $name = explode('[', $name)[0];
+
                         if (isset($outputFiles[$name]) && !is_array($outputFiles[$name])) $outputFiles[$name] = [];
 
                         $outputFiles[$name][] = new UploadedFile(
